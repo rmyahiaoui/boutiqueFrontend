@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder } from "@angular/forms";
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: "cc-reserve",
@@ -8,55 +10,70 @@ import { FormGroup, FormBuilder } from "@angular/forms";
 })
 export class ReserveComponent implements OnInit {
   reservationForm: FormGroup;
-  date = new Date();
-  // in summer, add 1 hour to match summer hour 
-  hourDelta = 0;
 
-  timeOptions = [
-    "12:00",
-    "12:30",
-    "13:00",
-    "13:30",
-    "19:00",
-    "19:30",
-    "20:00",
-    "20:30"
+  marques = [
+    "adidas",
+    "celio",
+    "jules",
+    "nike",
+    "puma",
   ];
-  peopleOptions = [1, 2, 3, 4, 5, 6, 7, 8];
-  isScheduleOk = false;
-  client = { firstName: '', lastName: '', email: '', phone: '' };
+
+  couleurs = [
+    "noir",
+    "jaune",
+    "bleu",
+    "gris",
+    "vert",
+    "rouge",
+  ];
+
+  types = [
+    "ville",
+    "sport",
+    "soirée",
+    "travail",
+  ];
+
+  matieres = [
+    "tissu",
+    "cuir"
+  ];
+
+  prix: number;
 
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private httpClient: HttpClient) {}
 
   ngOnInit() {
     this.createForm();
-    this.timeZoneOffset(new Date());
   }
 
   createForm(): any {
     this.reservationForm = this.fb.group({
       date: new Date(),
       time: "",
-      people: 1
+      marque: 1,
+      type: "",
+      matiere: "",
+      prix: "",
+      couleur: ""
     });
-  }
-
-  timeZoneOffset(date: Date) {
-    const offset = date.getTimezoneOffset() / 60;
-    if(offset == 2) {
-      this.hourDelta = 1;
-    }
   }
 
   saveReservation() {
     if(this.reservationForm.valid) {
       console.log(this.reservationForm);
-      this.isScheduleOk = true;
+      this.httpClient
+      .post('http://127.0.0.1:8000/chaussures/create', this.reservationForm.value)
+      .subscribe(
+        () => {
+          console.log('Enregistrement terminé !');
+        },
+        (error) => {
+          console.log('Erreur ! : ' + error);
+        }
+      );
     }
-  }
-
-  finalizeReservation(formValue) {
-    console.log(formValue);
   }
 }

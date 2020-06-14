@@ -5,6 +5,11 @@ import { debounceTime, map, tap, switchMap, take } from "rxjs/operators";
 
 import { ScheduleService } from "../services/schedule.service";
 import { EveningEvent } from "../models/evening-event.interface";
+import { DataSource } from '@angular/cdk/collections';
+
+
+
+
 
 @Component({
   selector: "cc-schedule",
@@ -12,36 +17,25 @@ import { EveningEvent } from "../models/evening-event.interface";
   styleUrls: ["./schedule.component.css"]
 })
 export class ScheduleComponent implements OnInit, OnDestroy {
-  searchTerm = new FormControl();
-  searchTerms$: Observable<string> = this.searchTerm.valueChanges;
+  displayedColumns = ['id'];
   result: EveningEvent[] = [];
-  searchSubscription: Subscription;
   
+
   constructor(private scheduleService: ScheduleService) {}
   
   ngOnInit() {
     this.getAllEvents();
-    
-    this.searchSubscription = this.searchTerms$
-    .pipe(
-      debounceTime(1000),
-      switchMap(term => this.scheduleService.search(term))
-    )
-    .subscribe(data => (this.result = data), err => console.error(err));
   }
   
   ngOnDestroy(): void {
-    this.searchSubscription.unsubscribe();
   }
 
   getAllEvents() {
     this.scheduleService
       .getAllEvents()
-      .pipe(take(1))
       .subscribe(
         data => (this.result = data),
         err => console.error(err),
-        () => console.log("done")
       );
   }
 }

@@ -1,43 +1,43 @@
-<div *ngIf="!isScheduleOk">
+<div>
   <form [formGroup]="reservationForm" (submit)="saveReservation()" class="example-container">
+    
+    <mat-form-field> 
+      <mat-select placeholder="marque" formControlName="marque">
+        <mat-option *ngFor="let marque of marques" [value]="marque">
+          {{ marque }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field> 
+      <mat-select placeholder="type" formControlName="type">
+        <mat-option *ngFor="let type of types" [value]="type">
+          {{ type }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field> 
+      <mat-select placeholder="matiere" formControlName="matiere">
+        <mat-option *ngFor="let matiere of matieres" [value]="matiere">
+          {{ matiere }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field> 
+        <input matInput placeholder="prix" formControlName="prix" required>
+    </mat-form-field>
+    <mat-form-field> 
+      <mat-select placeholder="couleur" formControlName="couleur">
+        <mat-option *ngFor="let couleur of couleurs" [value]="couleur">
+          {{ couleur }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
     <mat-form-field>
-      <input matInput [matDatepicker]="picker" placeholder="choisir une date" formControlName="date" required>
+      <input matInput [matDatepicker]="picker" placeholder="choisir une date de vente" formControlName="date" required>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker startView="year" [startAt]="date"></mat-datepicker>
     </mat-form-field>
-    <mat-form-field>
-      <mat-select placeholder="heure" formControlName="time" required>
-        <mat-option *ngFor="let to of timeOptions" [value]="to">
-          {{ to }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-select placeholder="combien de personnes" formControlName="people">
-        <mat-option *ngFor="let po of peopleOptions" [value]="po">
-          {{ po }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <button mat-button type="submit">confirmer l'horaire</button>
-  </form>
-</div>
-
-<div *ngIf="isScheduleOk">
-  <form #f="ngForm" (submit)="finalizeReservation(f.value)" class="example-container">
-    <mat-form-field>
-      <input matInput type="text" [(ngModel)]="client.firstName" name="firstName" placeholder="prénom" required />
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="text" [(ngModel)]="client.lastName" name="lastName" placeholder="nom" required />
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="text" [(ngModel)]="client.email" name="email" placeholder="email" required />
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="text" [(ngModel)]="client.phone" name="phone" placeholder="téléphone" required />
-    </mat-form-field>
-    <button mat-button type="submit">réserver</button>       
+    <button mat-button type="submit">Ajouter l'article</button>
   </form>
 </div>
 

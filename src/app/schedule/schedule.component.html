@@ -1,23 +1,15 @@
-<h2>Soirées à thèmes</h2>
-
-<div>
-  <form>
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="jeu, karaoke, sport ..." [formControl]="searchTerm">
-    </mat-form-field>
-  </form>
-</div>
-
+<h2>LIste des articles</h2>
+<cc-table-articles></cc-table-articles>
 <div *ngIf="result.length > 0">
   <mat-card *ngFor="let res of result">
     <mat-card-header>
+      <mat-card-title>{{res.id}}</mat-card-title>
+      <mat-card-title>{{res.marque}}</mat-card-title>
+      <mat-card-title>{{res.type}}</mat-card-title>
       <mat-card-title>{{res.title}}</mat-card-title>
-      <mat-card-subtitle>{{res.date}}</mat-card-subtitle>
+      <mat-card-title>{{res.matiere}}</mat-card-title>
+      <mat-card-subtitle>{{res.prix}}</mat-card-subtitle>
+      <mat-card-subtitle>{{res.date_vente}}</mat-card-subtitle>
     </mat-card-header>
-    <mat-card-content>
-      <p>
-        {{res.description}}
-      </p>
-    </mat-card-content>
   </mat-card>
 </div>

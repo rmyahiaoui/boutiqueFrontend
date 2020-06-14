@@ -8,6 +8,7 @@ import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MainNavComponent } from "./main-nav/main-nav.component";
 import { LayoutModule } from "@angular/cdk/layout";
+
 import {
   MatToolbarModule,
   MatButtonModule,
@@ -18,7 +19,6 @@ import {
   MatCardModule,
   MatGridListModule,
   MatMenuModule,
-  MatTableModule,
   MatPaginatorModule,
   MatSortModule,
   MatInputModule,
@@ -26,37 +26,31 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
   MAT_DATE_LOCALE,
-  MatSelectModule
+  MatSelectModule,
+  MatProgressSpinnerModule, 
+  MatTableModule,
 } from "@angular/material";
-import { HomeComponent } from "./home/home.component";
-import { CarteComponent } from "./carte/carte.component";
 import { ReserveComponent } from "./reserve/reserve.component";
-import { ContactComponent } from "./contact/contact.component";
 import { MainDashComponent } from "./main-dash/main-dash.component";
-import { DishTableComponent } from "./dish-table/dish-table.component";
 import { ScheduleComponent } from './schedule/schedule.component';
 import { PhoneComponent } from './phone/phone.component';
+import { HomeComponent } from './home/home.component';
+import { TableArticlesComponent } from './table-articles/table-articles.component';
 
 const routes: Routes = [
-  { path: "", component: HomeComponent },
-  { path: "carte", component: CarteComponent },
+  { path: "", component: ScheduleComponent },
   { path: "reserve", component: ReserveComponent },
-  { path: "schedule", component: ScheduleComponent },
-  { path: "contact", component: ContactComponent }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     MainNavComponent,
-    HomeComponent,
-    CarteComponent,
     ReserveComponent,
-    ContactComponent,
     MainDashComponent,
-    DishTableComponent,
     ScheduleComponent,
-    PhoneComponent
+    PhoneComponent,
+    TableArticlesComponent
   ],
   imports: [
     BrowserModule,
@@ -76,6 +70,7 @@ const routes: Routes = [
     MatNativeDateModule,
     MatGridListModule,
     MatMenuModule,
+    MatProgressSpinnerModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
@@ -85,6 +80,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes)
   ],
   providers: [{provide: MAT_DATE_LOCALE, useValue: 'fr-FR'},],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports:[ MatTableModule ]
+
 })
 export class AppModule {}

@@ -11,20 +11,11 @@ import { Schedule } from '../models/schedule.interface';
 export class ScheduleService {
   constructor(private httpClient: HttpClient) { }
 
-  getAllEvents(): Observable<EveningEvent[]> {
+  getAllEvents(): Observable<any> {
     return this.httpClient
-                .get<Schedule>('assets/schedules.json')
+                .get<any>('http://127.0.0.1:8000/chaussures')
                 .pipe(
-                  map(res => res.events)
-                );
-  }
-
-  search(term: string): Observable<EveningEvent[]> {
-    const termLowerCase = term.toLocaleLowerCase();
-    return this.httpClient
-                .get<Schedule>('assets/schedules.json')
-                .pipe(
-                  map(res => res.events.filter(evt => evt.title.toLocaleLowerCase().indexOf(termLowerCase) > -1 || evt.description.toLocaleLowerCase().indexOf(termLowerCase) > -1))
+                  map(res => JSON.parse(res.data))
                 );
   }
 

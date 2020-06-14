@@ -126,6 +126,6 @@
   },
   "defaultProject": "restaurangular",
   "cli": {
-    "analytics": "e629c0cb-55ed-40e4-8154-32eb0e659ef4"
+    "analytics": false
   }
 }
