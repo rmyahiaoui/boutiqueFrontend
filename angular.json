@@ -124,8 +124,5 @@
       }
     }
   },
-  "defaultProject": "restaurangular",
-  "cli": {
-    "analytics": false
-  }
+  "defaultProject": "restaurangular"
 }

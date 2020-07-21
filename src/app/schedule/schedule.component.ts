@@ -17,7 +17,6 @@ import { DataSource } from '@angular/cdk/collections';
   styleUrls: ["./schedule.component.css"]
 })
 export class ScheduleComponent implements OnInit, OnDestroy {
-  displayedColumns = ['id'];
   result: EveningEvent[] = [];
   
 

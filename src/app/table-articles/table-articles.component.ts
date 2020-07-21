@@ -1,8 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource,MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { TableArticlesDataSource } from './table-articles-datasource';
 import { DataSource } from '@angular/cdk/table';
-
+import { ScheduleService } from "../services/schedule.service";
+export interface TableArticlesItem {
+  id: number;
+  marque: string;
+  type: string;
+  prix: number;
+  couleur: string;
+  date_vente: string
+}
 @Component({
   selector: 'cc-table-articles',
   templateUrl: './table-articles.component.html',
@@ -11,12 +21,23 @@ import { DataSource } from '@angular/cdk/table';
 export class TableArticlesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  dataSource: TableArticlesDataSource;
+  data: TableArticlesItem[];
 
-  /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name'];
+  dataSource= new MatTableDataSource<TableArticlesItem>(this.data);
+  displayedColumns = ['id', 'marque', 'type', 'prix', 'couleur', 'date_vente'];
 
-  ngOnInit() {
-    this.dataSource = new TableArticlesDataSource(this.paginator, this.sort);
+  constructor(private scheduleService: ScheduleService) { }
+  
+  ngOnInit(){
+    this.getAllEvents();
+  }
+  
+  public getAllEvents() {
+    this.scheduleService
+        .getAllEvents().subscribe(
+          data => {
+            console.log(data);
+            this.dataSource.data = data as TableArticlesItem[];
+          });
   }
 }
